@@ -1,0 +1,43 @@
+<project name="Game.getKey" default="jarfile">
+
+    <target name="init">
+        <property name="project.name" value="Game.getKey"/>
+        <property name="src.dir" value="src"/>
+        <property name="main.class" value="org.academiacodigo.bootcamp55.GamePrototip.Main"/>
+        <property name="build.dir" value="build"/>
+        <property name="classes.dir" value="${build.dir}/classes"/>
+        <property name="resources.dir" value="resources"/>
+        <property name="libs.dir" value="libs"/>
+        <path id="classpath">
+            <fileset dir="${libs.dir}"/>
+        </path>
+
+    </target>
+
+    <target name="prepare" description="Creates the build and classes directories" depends="init">
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <target name="compile" description="Compiles the source code" depends="prepare">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.7" target="1.7">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="clean" description="Clean up" depends="init">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="jarfile" description="Archives the code" depends="compile">
+        <jar destfile="${build.dir}/${project.name}.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="org.academiacodigo.bootcamp55.GamePrototip.Main" />
+                <attribute name="Class-Path" value="${libs.dir}"/>
+            </manifest>
+            <zipgroupfileset dir="${libs.dir}"/>
+            <fileset dir="${resources.dir}"/>
+        </jar>
+    </target>
+
+
+</project>
